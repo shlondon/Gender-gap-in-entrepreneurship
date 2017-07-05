@@ -98,22 +98,16 @@ shinyUI(fluidPage(
                                             min = 1,max = 20,
                                             value = 2)))
                        ),
-              tabPanel("Documentacion",
+              tabPanel("Documentation",
                        sidebarLayout(
                          sidebarPanel(
                            p(img(src="GEM-logo.png", heigth=200,width=350)),
-                           p("El proposito del proyecto Global Entrepreneurship
-                              Monitor, GEM, es examinar el papel que tiene
-                             el emprendimiento como fuerza impulsora del
-                             crecimiento economico a lo largo del mundo. El
-                             proyecto aspira a capturar informacion sobre el
-                             desarrollo de todas las actividades que conduzcan
-                             a la creacion de nuevos negocios en los diferentes
-                             paises. Para mayor informacion sobre este proyecto
-                             consultar el sitio oficial http://www.gemconsortium.org")
+                           p("The purpose of the Global Entrepreneurship Monitor (GEM)
+project is to examine the role of entrepreneurship as a driving force for economic growth throughout the world. The project aims to capture information on the development of all activities that lead to the creation of new businesses in different countries.
+                             For more information on this project consult the official site http://www.gemconsortium.org")
                          ),
                          mainPanel(
-                           includeMarkdown("Documentacion.md")
+                           includeMarkdown("Documentation.md")
                          )
                        ))
               )
