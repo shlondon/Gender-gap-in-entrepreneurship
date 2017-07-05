@@ -14,9 +14,12 @@ You can run the application in two ways:
 
 	2.2. Download [RStudio](https://www.rstudio.com/). Integrated Development Enviroment (IDE) that facilitates the use of R.
 
-	2.3. Download the 'shiny' package. You can do it, using Rstudio (you can also do it in R, but it is recommended to work directly on RStudio), using the following line of code 'install.package ("shiny")'. Then load the library with the code 'library (shiny)'.
+	2.3. Download the `shiny` package. You can do it, using Rstudio (you can also do it in R, but it is recommended to work directly on RStudio), using the following line of code `install.package("shiny")`. Then load the library with the code `library(shiny)`.
 
 	2.4. Run the web application on your computer. Do it with the following code: shiny :: runGitHub (repo = "Gender-gap-in-entrepreneurship", username = "shlondon")	
 
 	2.5. Enjoy it   :D
+
+* Please do not forget to quote this application. You can do this as:
+	+ Londoño-Restrepo, S.H. (2017) Gender gap in entrepreneurship. Web Application.
 
