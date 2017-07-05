@@ -1,4 +1,4 @@
-# Gender gap in entrepreneurship
+# [Gender gap in entrepreneurship](https://sahlre.shinyapps.io/Gender-gap-in-entrepreneurship-master/)
 
 In this repository is the web application **Gender gap in emprendimineto**.
 
@@ -7,16 +7,16 @@ slondono@coruniamericana.edu.co. It aims to create graphs and estimate multivari
 
 You can run the application in two ways:
 
-1. In this web site: https://sahlre.shinyapps.io/Gender-gap-in-entrepreneurship-master/, you can enjoy it. However, there is a restriction of 25 hours of usage per month, then charged. This is because the application is using the shiny server, free version.
-2. Usted puede correr la aplication localmente en su propia computadora. Siga los siguientes pasos:
+1. In this web site: <https://sahlre.shinyapps.io/Gender-gap-in-entrepreneurship-master/>, you can enjoy it. However, there is a restriction of 25 hours of usage per month, then charged. This is because the application is using the shiny server, free version.
+2. You can run the application locally on your own computer. Follow these steps:
 
-	2.1. Descargar el software R. Funciona para cualquier sistema operativo.
+	2.1. Download [software R](https://www.r-project.org/). Works for any operating system.
 
-	2.2. Descargar Rstudio. IDE que facilita el uso de R.
+	2.2. Download [RStudio] (https://www.rstudio.com/). Integrated Development Enviroment (IDE) that facilitates the use of R.
 
-	2.3. Descargar la libraria 'shiny'. Usted lo puede hacer, utilizando Rstudio (también puede hacerlo en R, pero se recomienda trabajar utilizando Rstudio), mediante la siguiente linea de código 'install.package("shiny")'. Luego cargar la librería con el código 'library(shiny)'.
+	2.3. Download the 'shiny' package. You can do it, using Rstudio (you can also do it in R, but it is recommended to work directly on RStudio), using the following line of code 'install.package ("shiny")'. Then load the library with the code 'library (shiny)'.
 
-	2.4. Ejecutar el aplicativo web en su computador. Hagalo mediante el siguiente código 'shiny::runGitHub(repo = "Gender-gap-in-entrepreneurship", username = "shlondon")'
+	2.4. Run the web application on your computer. Do it with the following code: shiny :: runGitHub (repo = "Gender-gap-in-entrepreneurship", username = "shlondon") '
 
-	2.5. Disfruta :D
+	2.5. Enjoy it   :D
 
