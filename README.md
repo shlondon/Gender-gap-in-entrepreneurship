@@ -11,8 +11,12 @@ You can run the application in two ways:
 2. Usted puede correr la aplication localmente en su propia computadora. Siga los siguientes pasos:
 
 	2.1. Descargar el software R. Funciona para cualquier sistema operativo.
+
 	2.2. Descargar Rstudio. IDE que facilita el uso de R.
+
 	2.3. Descargar la libraria 'shiny'. Usted lo puede hacer, utilizando Rstudio (también puede hacerlo en R, pero se recomienda trabajar utilizando Rstudio), mediante la siguiente linea de código 'install.package("shiny")'. Luego cargar la librería con el código 'library(shiny)'.
+
 	2.4. Ejecutar el aplicativo web en su computador. Hagalo mediante el siguiente código 'shiny::runGitHub(repo = "Gender-gap-in-entrepreneurship", username = "shlondon")'
+
 	2.5. Disfruta :D
 
