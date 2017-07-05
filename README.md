@@ -21,5 +21,5 @@ You can run the application in two ways:
 	2.5. Enjoy it   :D
 
 * Please do not forget to quote this application. You can do this as:
-	+ Londoño-Restrepo, S.H. (2017) Gender gap in entrepreneurship. Web Application.
+	+ Londoño-Restrepo, S.H. (2017) Gender gap in entrepreneurship. Web Application. https://github.com/shlondon/Gender-gap-in-entrepreneurship
 
