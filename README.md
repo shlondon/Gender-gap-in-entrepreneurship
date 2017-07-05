@@ -12,7 +12,7 @@ You can run the application in two ways:
 
 	2.1. Download [software R](https://www.r-project.org/). Works for any operating system.
 
-	2.2. Download [RStudio] (https://www.rstudio.com/). Integrated Development Enviroment (IDE) that facilitates the use of R.
+	2.2. Download [RStudio](https://www.rstudio.com/). Integrated Development Enviroment (IDE) that facilitates the use of R.
 
 	2.3. Download the 'shiny' package. You can do it, using Rstudio (you can also do it in R, but it is recommended to work directly on RStudio), using the following line of code 'install.package ("shiny")'. Then load the library with the code 'library (shiny)'.
 
