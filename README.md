@@ -9,6 +9,7 @@ You can run the application in two ways:
 
 1. In this web site: https://sahlre.shinyapps.io/Gender-gap-in-entrepreneurship-master/, you can enjoy it. However, there is a restriction of 25 hours of usage per month, then charged. This is because the application is using the shiny server, free version.
 2. Usted puede correr la aplication localmente en su propia computadora. Siga los siguientes pasos:
+
 	2.1. Descargar el software R. Funciona para cualquier sistema operativo.
 	2.2. Descargar Rstudio. IDE que facilita el uso de R.
 	2.3. Descargar la libraria 'shiny'. Usted lo puede hacer, utilizando Rstudio (también puede hacerlo en R, pero se recomienda trabajar utilizando Rstudio), mediante la siguiente linea de código 'install.package("shiny")'. Luego cargar la librería con el código 'library(shiny)'.
