@@ -1,0 +1,220 @@
+---
+title: 'How work my App: Gender gap in entrepreneurship'
+author: "Santiago Humberto Londoño Restrepo"
+date: "5 de julio de 2017"
+output:
+  slidy_presentation: default
+  ioslides_presentation: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Gender gap in entrepreneurship
+
+This application is built for those interested in analyzing the enterprise from a gender perspective. It is also aimed at helping those who have difficulty creating graphs and inferential statistics because they do not have training in software and database management. It is an application subject to myriad improvements, so you can propose improvements or new ideas and send them to the mail: slondono@coruniamericana.edu.co. It aims to create graphs and estimate multivariate binomial logistic regression models to analyze the gender gap in entrepreneurial activity detected by the Global Entrepreneurship Monitor (GEM) project. Each of the databases mentioned below that support the application can be obtained at http://www.gemconsortium.org/data/sets.
+
+###Structure of the application
+
+The application is structured in five divisions or tags:Graphical gender gap in TEA, Graphical gender disparity in TEA, Multivariate binomial logistic regression model, Multivariate graphs and Documentation. By default, the application starts at the tab Graphic gender gap in the TEA. The following slides will explain the possibilities of interaction that the user has in each one of the divisions of the application:
+
+## Graphical gender gap in TEA
+
+The operation of this tab is similar to the Graphical gender disparity in TEA tab. You are invited to see with your own eyes the operation of this tab by visiting the application at: https://sahlre.shinyapps.io/Gender-gap-in-entrepreneurship-master/
+
+If you select the buttons:
+
+- Choose a country = Worldwide
+- Choose the thickness of the lines = 5
+- Choose the x-axis scale = 2
+- Choose the y-axis scale = 2
+
+You will get the graph at the end of the slide. Below is the code in R within the application that allows the graph to be made:
+
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+#Funci?n que transforma el archivo proporcionado por el GEM, Crea una lista que
+#puede ser gestionada facilmente por otras funciones
+library(xlsx)
+basedatos <- function(bdexcel){
+        #Configurar el directorio de trabajo sobre aquella carpeta que contiene
+        #el archivo excel denominado GEM APS Key Indicators 2001 - 2015.xls
+        #C?digo para cargar una base de datos .xls con varias sheets
+
+        wb <- loadWorkbook(bdexcel)
+        #Averiguar la cantidad de sheets que tiene la base de datos .xls
+        m <- wb$getNumberOfSheets()
+
+        #Crear una base de datos universal tipo list. All? se encuentran los principales
+        #indicadores que se extraen de la encuesta APS del proyecto GEM
+        bdu <- list()
+        for (i in 1:m) {
+                bdu[i] <- list(read.xlsx2(bdexcel, i))
+        }
+
+        #Se eliminan las filas 2 y 3 de todos los data.frame que estan en la lista
+        bdu1 <- lapply(bdu, function(x){x[-c(1:2),]})
+
+        #Se adicionan los nombres de las sheets correspondientes a la wb original
+        names(bdu1) <- as.character(c(2001:2015))
+
+        #Se transforma a character cada una de las columnas de cada
+        #uno de los data.frames en bdu1
+        for (j in 1:length(bdu1)){
+                for (k in 1:dim(bdu1[[j]])[2]){
+                        bdu1[[j]][, k]<- as.character(bdu1[[j]][, k])
+                }
+        }
+
+        #Las columnas n?mero 2 de cada data.frame se les coloca el nombre de Pais
+        for(o in 1:length(bdu1)){
+                names(bdu1[[o]])[2] <- c("Pais")
+        }
+
+        #Se dejan solo las columnas correspondientes a la TEA por G?nero y el pa?s
+        bdu1 <- lapply(bdu1, function(x){x[, c("Pais", "Teayymal", "Teayyfem", "Teayy")]})
+
+        #Se agregan a cada uno de los data.frame la medida de disparidad
+        #Disparidad = TeaMas / TeaFem
+        for(i in 1:length(bdu1)){
+                bdu1[[i]]$disp <- as.numeric(bdu1[[i]]$Teayymal) / as.numeric(bdu1[[i]]$Teayyfem)
+        }
+
+        #Se agrega el periodo a cada uno de los data.frame
+        for (i in 1:length(bdu1)) {
+                bdu1[[i]]$periodo <- rep(names(bdu1)[i], dim(bdu1[[i]])[1])
+        }
+
+        bdu1
+}
+
+```
+
+```{r, echo=TRUE, message=FALSE, warning=FALSE, fig.align='center'}
+#Database required to use the bd_x_pais function
+#basedatos() is a function that creates the appropriate database that the bd_x_pais()
+bdu1 <- basedatos("GEM APS Key Indicators 2001 - 2015.xls")
+
+# Function that allows to graph by step the TEA by Gender is called bd_x_pais
+library(ggplot2)
+#The only argument the function receives
+#is nation where the user enters the country of interest, for
+#defecto is the name of "Worldwide" that allows to graph
+# The gender gap in entrepreneurship
+bd_x_pais <- function(nacion = "Worldwide", lin = 0, ejx = 0, ejy = 0){
+        if(nacion == "Worldwide"){
+                # Function that receives a list, created previously with the previous code
+                #and then graph the gender gap for all countries
+                mas <- sapply(bdu1, function(x)
+                {mean(as.numeric(x[,c("Teayymal")]))})
+                fem <- sapply(bdu1, function(x)
+                {mean(as.numeric(x[,c("Teayyfem")]))})
+                g <- c(mas, fem)
+                tiempo <- rep(2001:2015, 2)
+                genero <- c(rep("Male", 15), rep("Female", 15))
+                df1 <- data.frame(TEA = g, periodo = tiempo, gender = genero)
+
+                g1 <- ggplot(df1, aes(x = tiempo, y = TEA, colour = gender))
+                g1 + geom_line(size = lin)       +
+                        xlab("Time") +  ylab("TEA (%)") +
+                        scale_x_continuous(limits = c(df1$periodo[1] - ejx, 
+                                                      df1$periodo[dim(df1)[1]] + ejx),
+                                           expand = c(0, 0)) +
+                        scale_y_continuous(limits = c(min(c(min(na.omit(df1$TEA)), 
+                                                            min(na.omit(df1$TEA)))) - ejy,
+                                                      max(c(max(na.omit(df1$TEA)), 
+                                                            max(na.omit(df1$TEA)))) + ejy),
+                                           expand = c(0, 0)) +
+                        geom_point() +
+                        theme_bw() +
+                        geom_text(aes(label=round(TEA,1)), colour="black", size=3)
+
+        }else{
+                #Crea a vector with the feminine Tea according to the argument nation
+                fem <- sapply(1:length(bdu1), function(x){
+                        if(sum(bdu1[[x]]$Pais == nacion) == 0){
+                                NA
+                        }else{
+                                bdu1[[x]][bdu1[[x]]$Pais == nacion,c("Teayyfem")]
+                        }
+                })
+                fem <- as.numeric(fem)
+
+                #Crea a table with the male Tea according to the argument nation
+                mas <- sapply(1:length(bdu1), function(x){
+                        if(sum(bdu1[[x]]$Pais == nacion) == 0){
+                                NA
+                        }else{
+                                bdu1[[x]][bdu1[[x]]$Pais == nacion, c("Teayymal")]
+                        }
+                })
+                mas <- as.numeric(mas)
+
+                #The database on which the gap between countries is created
+                df1 <- data.frame(Tea = c(mas, fem),
+                                  Gender = c(rep("Male", 15), rep("Female", 15)),
+                                  Periodo = as.numeric(2001:2015))
+                df1 <- na.omit(df1)
+
+                #The country gap is plotted
+                ggplot(df1, aes(x=Periodo,y=Tea, colour = Gender)) +
+                        geom_line(size = lin) +
+                        xlab("Time") +  ylab("TEA") +
+                        scale_x_continuous(limits = c(df1$Periodo[1] - ejx, 
+                                                      df1$Periodo[dim(df1)[1]] + ejx),
+                                           expand = c(0, 0)) +
+                        scale_y_continuous(limits = c(min(c(min(na.omit(df1$Tea)), 
+                                                            min(na.omit(df1$Tea)))) - ejy,
+                                                      max(c(max(na.omit(df1$Tea)), 
+                                                            max(na.omit(df1$Tea)))) + ejy),
+                                           expand = c(0, 0)) +
+                        geom_point()  +
+                        theme_bw()+
+                        geom_text(aes(label=round(Tea,1)), colour="black", size=3)
+        }
+
+}
+
+bd_x_pais(nacion = "Worldwide", lin = 5, ejx = 2, ejy = 2)
+
+```
+
+
+
+## Multivariate binomial logistic regression model
+
+If you select the buttons:
+
+- Choose a country = Germany
+- Dependent Variable = futsup
+- Check the Interaction with the gender variable box
+- Check the Independent variable box with = age, gender, GEMEDUC, GEMWORK3, GEMHHINC
+
+You will get:
+
+```{r,echo=TRUE,fig.align='center'}
+library(png)
+library(grid)
+img <- readPNG("plots/p1.png")
+grid.raster(img)
+```
+
+## Multivariate graphs
+
+If you select the buttons:
+
+- Choose a country = Brazil
+- Dependent Variable = futsup
+- Independent Variable = age9c, gender, GEMHHINC
+- Choose the number of columns for your chart = 6
+
+You will get:
+
+```{r,echo=TRUE,fig.align='center'}
+library(png)
+library(grid)
+img <- readPNG("plots/p2.png")
+grid.raster(img)
+```
+
